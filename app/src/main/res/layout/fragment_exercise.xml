@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.ExerciseFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"
+            app:layout_collapseMode="pin"
+            android:background="@drawable/bg_toolbar">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="139dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="32dp"
+                android:src="@drawable/logo_small"
+                android:contentDescription="@string/image"
+                android:layout_gravity="start|center_vertical" />
+
+            <ImageView
+                android:id="@+id/toolbar_com2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/image"
+                app:tint="?attr/colorSecondary" />
+
+            <ImageView
+                android:id="@+id/toolbar_com1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:contentDescription="@string/image"
+                android:layout_gravity="end"
+                app:tint="?attr/colorSecondary"
+                android:src="@drawable/ic_toolbar_com1" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tv_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/exercise"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="22sp"
+            android:textColor="?attr/colorPrimaryVariant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/list_exercise"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_exercise" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_exercise">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_exercise" />
+                    <include layout="@layout/shimmer_exercise" />
+                    <include layout="@layout/shimmer_exercise" />
+                    <include layout="@layout/shimmer_exercise" />
+                </LinearLayout>
+            </ScrollView>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

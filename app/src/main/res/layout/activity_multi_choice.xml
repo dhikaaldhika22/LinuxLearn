@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MultipleChoiceDetailActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryVariant"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_question_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tv_current_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Pertanyaan 1"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_total_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="32dp"
+                tools:text="/10"
+                android:layout_toEndOf="@id/tv_current_question"
+                android:textSize="24sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="?attr/colorOnPrimary" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@color/white"
+                android:layout_alignBottom="@id/tv_total_question" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            tools:text="Pengenalan Dasar Sistem Operasi"
+            android:textSize="15sp"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:fontFamily="@font/poppins_semibold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_question_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="?attr/colorPrimaryVariant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                tools:text="Dibawah ini yang bukan merupakan jenis dari sistem operasi adalah.."
+                android:textSize="20sp"
+                android:paddingTop="50dp"
+                android:paddingBottom="50dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textAlignment="center"
+                android:textColor="?attr/colorOnPrimary" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_instruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="Pilih Jawaban yang Menurut Kamu Benar!"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="?attr/colorPrimaryVariant"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_question_box"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cb_option1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/linux_is_open_source"
+            android:fontFamily="@font/poppins"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:padding="15dp"
+            android:buttonTint="?attr/colorSecondary"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:layoutDirection="rtl"
+            android:background="@drawable/round_back_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_instruction"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cb_option2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/linux_is_open_source"
+            android:fontFamily="@font/poppins"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:padding="15dp"
+            android:buttonTint="?attr/colorSecondary"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:layoutDirection="rtl"
+            android:background="@drawable/round_back_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_option1"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cb_option3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/linux_is_open_source"
+            android:fontFamily="@font/poppins"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:padding="15dp"
+            android:buttonTint="?attr/colorSecondary"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:layoutDirection="rtl"
+            android:background="@drawable/round_back_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_option2"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cb_option4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/linux_is_open_source"
+            android:fontFamily="@font/poppins"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:padding="15dp"
+            android:buttonTint="?attr/colorSecondary"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:layoutDirection="rtl"
+            android:background="@drawable/round_back_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_option3"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/next"
+            android:textSize="18sp"
+            android:drawableEnd="@drawable/ic_baseline_arrow_forward"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:fontFamily="@font/poppins_semibold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_option4"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_option4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/submit"
+            android:visibility="gone"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:background="@drawable/btn_register"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="18sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

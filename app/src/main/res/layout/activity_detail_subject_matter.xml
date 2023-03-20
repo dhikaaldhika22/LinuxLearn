@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.DetailSubjectMatterActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryVariant"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="20dp"
+            tools:text="Pengenalan Dasar Sistem Operasi"
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:minLines="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_label1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:textSize="11dp"
+            android:textColor="?attr/colorPrimaryVariant"
+            tools:text="Dasar"
+            android:fontFamily="@font/poppins"
+            android:background="@drawable/bg_label"
+            android:padding="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:textSize="11dp"
+            tools:text="Sistem Operasi"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:fontFamily="@font/poppins"
+            android:background="@drawable/bg_label"
+            android:padding="6dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_label1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            android:background="#D8D8D8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_label1"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/nav_1"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:backgroundTint="@null"
+            android:background="@drawable/bg_nav_active"
+            app:layout_constraintEnd_toStartOf="@id/nav_2"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <View
+            android:id="@+id/nav_2"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:backgroundTint="@null"
+            android:background="@drawable/bg_nav_nonactive"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toStartOf="@id/nav_3"
+            app:layout_constraintStart_toEndOf="@id/nav_1"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <View
+            android:id="@+id/nav_3"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:backgroundTint="@null"
+            android:background="@drawable/bg_nav_nonactive"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/nav_2"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
+            tools:text="Java adalah bahasa pemrograman yang multi platform dan multi device. Sekali anda menuliskan
+sebuah program dengan menggunakan Java, anda dapat menjalankannya hampir di semua
+komputer dan perangkat lain yang support Java, dengan sedikit perubahan atau tanpa perubahan
+sama sekali dalam kodenya. Aplikasi dengan berbasis Java ini dikompulasikan ke dalam p-code
+dan bisa dijalankan dengan Java Virtual Machine. Fungsionalitas dari Java ini dapat berjalan
+dengan platform sistem operasi yang berbeda karena sifatnya yang umum dan non-spesifik."
+            android:fontFamily="@font/poppins"
+            android:textSize="18sp"
+            android:textColor="#8791cb"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nav_2"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/back"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:drawableStart="@drawable/ic_baseline_arrow_back_24"
+            android:visibility="gone"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:fontFamily="@font/poppins_semibold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_content"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+<!--        <com.google.android.exoplayer2.ui.PlayerView-->
+<!--            android:id="@+id/playerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="32dp"-->
+<!--            android:layout_marginEnd="32dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tv_content" />-->
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAllCaps="false"
+            android:text="@string/next"
+            android:textSize="18sp"
+            android:drawableEnd="@drawable/ic_baseline_arrow_forward"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:fontFamily="@font/poppins_semibold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_content"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/btn_start_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/white"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/start_exercise"
+            android:background="@drawable/bg_box_primary"
+            app:layout_constraintStart_toEndOf="@+id/btn_subject_matter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_back"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/btn_subject_matter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:text="@string/subject_matter"
+            android:background="@drawable/bg_box_primary_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_start_exercise"
+            app:layout_constraintTop_toBottomOf="@id/tv_back"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

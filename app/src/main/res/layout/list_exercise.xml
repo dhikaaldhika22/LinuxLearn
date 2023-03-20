@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/white"
+    android:shadowRadius="50"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_card"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:maxLines="2"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="18sp"
+                android:transitionName="title"
+                tools:text="Dasar Sistem Operasi" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/gray"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:transitionName="desc"
+                tools:text="Pengenalan dasar sistem operasi" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_label_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginEnd="10dp"
+                    tools:text="20 Pertanyaan"
+                    android:textColor="@color/gray"
+                    android:padding="3dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="11sp"
+                    android:background="#F5F5F5" />
+
+                <TextView
+                    android:id="@+id/tv_label_subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    tools:text="Sistem Operasi"
+                    android:textColor="@color/gray"
+                    android:padding="3dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="11sp"
+                    android:background="#F5F5F5" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/ll_card"
+            android:clipToOutline="true"
+            android:contentDescription="@string/image"
+            android:scaleType="fitXY"
+            android:transitionName="image"
+            tools:src="@tools:sample/avatars"
+            tools:targetApi="s" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

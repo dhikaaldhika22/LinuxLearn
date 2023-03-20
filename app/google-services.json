@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "172969434719",
+    "firebase_url": "https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "linux-learn-6bdc2",
+    "storage_bucket": "linux-learn-6bdc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172969434719:android:4d2ee13641a7d20d3285ea",
+        "android_client_info": {
+          "package_name": "com.myproject.app.linuxlearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172969434719-vc8c8s26c32icaamnpsrjd0slfhfta2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myproject.app.linuxlearn",
+            "certificate_hash": "f1d673ba098e478d511b9e2144ae5db9a62e3c31"
+          }
+        },
+        {
+          "client_id": "172969434719-bf99tdf62ggct6jtaev7q2r934n2i11m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS5KHUCfIS54ibEo47IekULdJ6-3l_0Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172969434719-bf99tdf62ggct6jtaev7q2r934n2i11m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
