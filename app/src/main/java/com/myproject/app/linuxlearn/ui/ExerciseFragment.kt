@@ -1,16 +1,16 @@
-@file:Suppress("DEPRECATION")
-
 package com.myproject.app.linuxlearn.ui
 
 import android.os.Bundle
-import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.adapter.ExerciseAdapter
 import com.myproject.app.linuxlearn.data.model.ExerciseModel
 import com.myproject.app.linuxlearn.databinding.FragmentExerciseBinding
@@ -32,13 +32,14 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun getExercise() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("exercises")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.exerciseEndpoint)
         exerciseArrayList = arrayListOf()
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(Looper.getMainLooper())
+                    handler.postDelayed({
                         for (exerciseSnapshot in snapshot.children) {
                             val exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
                             exercise?.id = exerciseSnapshot.key.toString()

@@ -1,15 +1,15 @@
-@file:Suppress("DEPRECATION")
-
 package com.myproject.app.linuxlearn.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.HandlerCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.adapter.ExerciseAdapter
 import com.myproject.app.linuxlearn.adapter.SubjectMatterAdapter
 import com.myproject.app.linuxlearn.data.model.ExerciseModel
@@ -61,17 +62,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun getProfilePicture() {
-//        val userRef = database.child("users/${auth?.uid}")
-//        val userMap = mapOf(
-//            "photo" to
-//        )
-//        userRef.updateChildren(userMap)
-//    }
-
     private fun getUsername() {
         val user = auth.currentUser
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("users")
+        database = FirebaseDatabase.getInstance(Constant.base_url).getReference(Constant.usersEndpoint)
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (user?.let { snapshot.hasChild(it.uid) } == true) {
@@ -90,14 +83,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun getSubjectMatter() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("subjectmatter")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.subjectMatterEndpoint)
         subjectMatterArrayList = arrayListOf()
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(Looper.getMainLooper())
+                    handler.postDelayed({
                         for (subjectMatterSnapshot in snapshot.children) {
                             val subjectMatter = subjectMatterSnapshot.getValue(SubjectMatterModel::class.java)
                             subjectMatter?.id = subjectMatterSnapshot.key.toString()
@@ -129,14 +123,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun getExercise() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("exercises")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.exerciseEndpoint)
         exerciseArrayList = arrayListOf()
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(Looper.getMainLooper())
+                    handler.postDelayed({
                         for (exerciseSnapshot in snapshot.children) {
                             val exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
                             exercise?.id = exerciseSnapshot.key.toString()

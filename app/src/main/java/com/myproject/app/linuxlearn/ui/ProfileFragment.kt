@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.myproject.app.linuxlearn.ui
 
 import android.app.Activity
@@ -10,11 +8,13 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.HandlerCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Continuation
@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
@@ -112,12 +113,13 @@ class ProfileFragment : Fragment() {
 
     private fun getUserData() {
         val user = auth.currentUser
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("users")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.usersEndpoint)
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (user?.let { snapshot.hasChild(it.uid) } == true) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(Looper.getMainLooper())
+                    handler.postDelayed({
                         binding?.apply {
                             tvEmail.text = snapshot.child(user.uid).child("email").getValue(String::class.java)
                             tvUsername.text = snapshot.child(user.uid).child("username").getValue(String::class.java)

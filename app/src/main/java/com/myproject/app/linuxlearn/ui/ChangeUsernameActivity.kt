@@ -11,6 +11,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.data.model.UserModel
 import com.myproject.app.linuxlearn.databinding.ActivityChangeUsernameBinding
@@ -46,7 +47,7 @@ class ChangeUsernameActivity : AppCompatActivity() {
 
     private fun getUsername() {
         val user = auth.currentUser
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("users")
+        database = FirebaseDatabase.getInstance(Constant.base_url).getReference(Constant.usersEndpoint)
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (user?.let { snapshot.hasChild(it.uid) } == true) {
@@ -55,10 +56,9 @@ class ChangeUsernameActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                //
             }
         })
-        // binding?.tilUsername?.setText(user?.displayName)
     }
 
     private fun updateData() {

@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import androidx.core.os.HandlerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.adapter.ExerciseAdapter
 import com.myproject.app.linuxlearn.data.model.ExerciseModel
@@ -38,13 +40,14 @@ class SeeAllExercisesActivity : AppCompatActivity() {
     }
 
     private fun getExercise() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("exercises")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.exerciseEndpoint)
         exerciseArrayList = arrayListOf()
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(mainLooper)
+                    handler.postDelayed({
                         for (exerciseSnapshot in snapshot.children) {
                             val exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
                             exercise?.id = exerciseSnapshot.key.toString()

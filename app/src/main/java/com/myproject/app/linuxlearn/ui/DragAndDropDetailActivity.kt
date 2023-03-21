@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.DragEvent
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.adapter.ExerciseAdapter
 import com.myproject.app.linuxlearn.data.model.ExerciseModel
@@ -59,17 +61,18 @@ class DragAndDropDetailActivity : AppCompatActivity() {
 
     private fun getDetailExercise() {
         database =
-            FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("exercises")
+            FirebaseDatabase.getInstance(Constant.base_url)
+                .getReference(Constant.exerciseEndpoint)
         exerciseArrayList = arrayListOf()
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    exerciseId = intent.getStringExtra("id")
+//                    exerciseId = intent.getStringExtra("id")
+                    exerciseId = intent.getStringExtra(GET_ID)
                     for (dragExerciseSnapshot in snapshot.child(exerciseId.toString())
-                        .child("questionDnd").children) {
+                        .child(Constant.dragAndDropQuestionEndpoint).children) {
                         exercise = dragExerciseSnapshot.getValue(ExerciseModel::class.java)
                         exercise?.id = dragExerciseSnapshot.key.toString()
 
@@ -116,7 +119,21 @@ class DragAndDropDetailActivity : AppCompatActivity() {
                                         "Pertanyaan ${currentQuestionPosition + 1}"
                                     if (currentQuestionPosition == size - 1) {
                                         setIndicator()
-                                        finishQuiz()
+                                     //   finishQuiz()
+                                        btnSubmit.setOnClickListener {
+                                            if (selectedOption == correctAnswerId) {
+                                                score++
+                                            }
+
+                                            val intent = Intent(this@DragAndDropDetailActivity, QuizResultActivity::class.java)
+                                            intent.putExtra("score", score)
+                                            intent.putExtra("id", exerciseId)
+                                            intent.putExtra(QuizResultActivity.DRAG_DROP, size.toString())
+                                            Log.d("Extra", "exerciseArrayList size: ${exerciseArrayList?.size}")
+                                            startActivity(intent)
+                                            finish()
+
+                                        }
                                     }
 
                                     for (child in blankBox.children) {
@@ -184,17 +201,6 @@ class DragAndDropDetailActivity : AppCompatActivity() {
                         true
                     }
                     DragEvent.ACTION_DRAG_ENTERED -> {
-//                        when (dragItem) {
-//                            tvOption1.id -> {
-//                                blankBox.removeView(tvOption2)
-//                                blankBox.removeView(tvOption3)
-//                                blankBox.removeView(tvOption4)
-//                                ll.addView(tvOption2)
-//                                ll.addView(tvOption3)
-//                                ll.addView(tvOption4)
-//                                blankBox.addView(tvOption1)
-//                            }
-//                        }
                         true
                     }
                     DragEvent.ACTION_DRAG_EXITED -> {
@@ -241,56 +247,6 @@ class DragAndDropDetailActivity : AppCompatActivity() {
                 }
             }
 
-//            rlOption1.setOnDragListener { view, dragEvent ->
-//                when (dragEvent.action) {
-//                    DragEvent.ACTION_DRAG_STARTED -> {
-//                        if (dragEvent.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-//                            (view as? RelativeLayout)?.setBackgroundColor(R.color.secondary)
-//                            view.invalidate()
-//                            true
-//                        } else {
-//                            false
-//                        }
-//                    }
-//                    DragEvent.ACTION_DRAG_ENTERED -> {
-//                        (view as? RelativeLayout)?.setBackgroundColor(R.color.secondary)
-//                        view.invalidate()
-//                        true
-//                    }
-//                    DragEvent.ACTION_DRAG_LOCATION -> {
-//                        true
-//                    }
-//                    DragEvent.ACTION_DRAG_EXITED -> {
-//                        (view as? RelativeLayout)?.setBackgroundColor(R.color.secondary)
-//                        view.invalidate()
-//                        true
-//                    }
-//                    DragEvent.ACTION_DROP -> {
-//                        val item: ClipData.Item = dragEvent.clipData.getItemAt(0)
-//                        val dragData = item.text
-//                        Toast.makeText(this@DragAndDropDetailActivity, "Data yang di drag adalah $dragData", Toast.LENGTH_SHORT).show()
-//                        (view as? RelativeLayout)?.setBackgroundColor(R.color.secondary)
-//                        view.invalidate()
-//                        true
-//                    }
-//                    DragEvent.ACTION_DRAG_ENDED -> {
-//                        (view as? RelativeLayout)?.setBackgroundColor(R.color.primer)
-//                        view.invalidate()
-//                        when(dragEvent.result) {
-//                            true ->
-//                                Toast.makeText(this@DragAndDropDetailActivity, "Handled", Toast.LENGTH_LONG)
-//                            else ->
-//                                Toast.makeText(this@DragAndDropDetailActivity, "Not Handled", Toast.LENGTH_LONG)
-//                        }.show()
-//
-//                        true
-//                    }
-//                    else -> {
-//                        Log.e("DragDrop Example", "Unknown action type received by View.OnDragListener.")
-//                        false
-//                    }
-//                }
-//            }
             tvOption2.setOnLongClickListener { view ->
                 selectedOption = 2
                 selectedOptions(tvOption2)
@@ -332,6 +288,7 @@ class DragAndDropDetailActivity : AppCompatActivity() {
                 val intent = Intent(this@DragAndDropDetailActivity, QuizResultActivity::class.java)
                 intent.putExtra("score", score)
                 intent.putExtra("id", exerciseId)
+                intent.putExtra(QuizResultActivity.DRAG_DROP, exerciseArrayList.size.toString())
                 startActivity(intent)
                 finish()
             }
@@ -377,5 +334,9 @@ class DragAndDropDetailActivity : AppCompatActivity() {
             btnSubmit.visibility = View.VISIBLE
             tvNext.visibility = View.GONE
         }
+    }
+
+    companion object {
+        const val GET_ID = "get_id"
     }
 }

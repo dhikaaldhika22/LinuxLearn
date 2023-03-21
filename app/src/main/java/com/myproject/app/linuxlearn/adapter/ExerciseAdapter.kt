@@ -26,7 +26,6 @@ class ExerciseAdapter(var c: Context, private val listExercise: List<ExerciseMod
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val exercise = listExercise[position]
-//        val detailExercise = listExercise[position]
 
         holder.binding.apply {
             tvTitle.text = exercise.name
@@ -35,21 +34,10 @@ class ExerciseAdapter(var c: Context, private val listExercise: List<ExerciseMod
             tvLabelSubject.text = exercise.subjectLabel
 
             holder.itemView.setOnClickListener {
-//                val name = detailExercise.name
-//                val question = detailExercise.question
-//                val optionA = detailExercise.optionA
-//                val optionB = detailExercise.optionB
-//                val optionC = detailExercise.optionC
-//                val optionD = detailExercise.optionD
-                val intent = Intent(c, DragAndDropDetailActivity::class.java)
-//                intent.extras?.putString("id", exercise.id)
-                intent.putExtra("id", exercise.id)
-//                intent.putExtra("name", name)
-//                intent.putExtra("question", question)
-//                intent.putExtra("optionA", optionA)
-//                intent.putExtra("optionB", optionB)
-//                intent.putExtra("optionC", optionC)
-//                intent.putExtra("optionD", optionD)
+//                val intent = Intent(c, MultipleChoiceDetailActivity::class.java)
+                val intent = Intent(c, ExerciseTypesActivity::class.java)
+//                intent.putExtra("id", exercise.id)
+                intent.putExtra(ExerciseTypesActivity.GET_ID, exercise.id)
                 c.startActivity(intent)
             }
         }

@@ -10,6 +10,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.data.model.UserModel
 import com.myproject.app.linuxlearn.databinding.ActivityRegisterBinding
 
@@ -64,11 +65,13 @@ class RegisterActivity : AppCompatActivity() {
                 else -> {
                     auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this@RegisterActivity) { task ->
-                            database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                            database = FirebaseDatabase.getInstance(Constant.base_url)
                                 .getReference("users")
                             val user = UserModel(tilUsername.text.toString(), tilEmail.text.toString())
                             database.child(task.result.user?.uid.orEmpty()).child("username").setValue(user.username)
                             database.child(task.result.user?.uid.orEmpty()).child("email").setValue(user.email)
+                            database.child(task.result.user?.uid.orEmpty()).child("photo").setValue("")
+
 
                             if (task.isSuccessful) {
                                 Toast.makeText(this@RegisterActivity, "Akun berhasil terdaftar", Toast.LENGTH_SHORT)

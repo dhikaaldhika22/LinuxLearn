@@ -21,9 +21,9 @@
         android:id="@+id/cv_multiple_choice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,12 +34,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
-
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="128dp"
+                android:layout_height="130dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/multiple_choice_img"
+                android:contentDescription="@string/image" />
             <LinearLayout
                 android:id="@+id/ll_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/iv"
                 android:orientation="vertical">
 
                 <TextView
@@ -62,12 +69,13 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/poppins"
-                    android:maxLines="3"
+                    android:maxLines="5"
                     android:textColor="@color/gray"
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     android:transitionName="desc"
                     android:text="Satu soal terdiri atas beberapa kemungkinan jawaban, meliputi jawaban yang benar dan beberapa jawaban yang salah  (pengecoh).  " />
             </LinearLayout>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -75,9 +83,9 @@
         android:id="@+id/cv_multi_choice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_multiple_choice"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,11 +97,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
 
+            <ImageView
+                android:id="@+id/iv_2"
+                android:layout_width="128dp"
+                android:layout_height="130dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/multi_answer_img"
+                android:contentDescription="@string/image" />
+
             <LinearLayout
                 android:id="@+id/ll_card2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/iv_2"
                 android:orientation="vertical">
 
                 <TextView
@@ -104,7 +121,7 @@
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:maxLines="2"
-                    android:text="Multi-choice"
+                    android:text="Multi-answer"
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="18sp"
                     android:transitionName="title" />
@@ -119,19 +136,19 @@
                     android:maxLines="6"
                     android:text="Bentuk soal pilihan ganda berupa pertanyaan yang memiliki lebih dari satu jawaban. "
                     android:textColor="@color/gray"
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     android:transitionName="desc" />
             </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_question_blank"
+        android:id="@+id/cv_drag_drop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_multi_choice"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,11 +160,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
 
+            <ImageView
+                android:id="@+id/iv_3"
+                android:layout_width="128dp"
+                android:layout_height="130dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/drag_drop_img"
+                android:contentDescription="@string/image" />
+
             <LinearLayout
                 android:id="@+id/ll_card3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/iv_3"
                 android:orientation="vertical">
 
                 <TextView
@@ -158,7 +184,7 @@
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:maxLines="2"
-                    android:text="Blank Question"
+                    android:text="Drag and Drop"
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="18sp"
                     android:transitionName="title" />
@@ -171,9 +197,9 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/poppins"
                     android:maxLines="3"
-                    android:text="Soal menyambung kalimat, dimana siswa diminta untuk mengisi kalimat yang masih kosong."
+                    android:text="Soal interaktif di mana siswa diminta untuk menyeret elemen-elemen ke area yang tepat"
                     android:textColor="@color/gray"
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     android:transitionName="desc" />
             </LinearLayout>
         </RelativeLayout>

@@ -1,16 +1,17 @@
-@file:Suppress("DEPRECATION")
-
 package com.myproject.app.linuxlearn.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.HandlerCompat
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.adapter.ExerciseAdapter
 import com.myproject.app.linuxlearn.data.model.ExerciseModel
@@ -56,16 +57,20 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
     }
 
     private fun getDetailExercise() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("exercises")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.exerciseEndpoint)
         exerciseArrayList = arrayListOf()
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
-                        exerciseId = intent.getStringExtra("id")
-                        for (exerciseSnapshot in snapshot.child(exerciseId.toString()).child("questions").children) {
+                    val handler = HandlerCompat.createAsync(mainLooper)
+                    handler.postDelayed({
+//                        exerciseId = intent.getStringExtra("id")
+                        exerciseId = intent.getStringExtra(GET_ID)
+                        Log.d("asu get", "onData: $exerciseId")
+//                        exercise?.id = intent.getStringExtra(GET_ID).toString()
+                        for (exerciseSnapshot in snapshot.child(exerciseId.toString()).child(Constant.multipleChoiceQuestionEndpoint).children) {
                             exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
                             exercise?.id = exerciseSnapshot.key.toString()
 
@@ -111,7 +116,18 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
                                         tvCurrentQuestion.text = "Pertanyaan ${currentQuestionPosition + 1}"
                                         if (currentQuestionPosition == size-1) {
                                             setIndicator()
-                                            finishQuiz()
+//                                            finishQuiz
+                                            btnSubmit.setOnClickListener {
+                                                if (selectedOption == correctAnswerId) {
+                                                    score++
+                                                }
+                                                val intent = Intent(this@MultipleChoiceDetailActivity, QuizResultActivity::class.java)
+                                                intent.putExtra("score", score)
+                                                intent.putExtra("id", exerciseId)
+                                                intent.putExtra(QuizResultActivity.MULTIPLE_CHOICE, size.toString())
+                                                startActivity(intent)
+                                                finish()
+                                            }
                                         }
                                         Toast.makeText(this@MultipleChoiceDetailActivity, "Skor anda : $score", Toast.LENGTH_SHORT).show()
                                     } else {
@@ -185,6 +201,7 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
                 val intent = Intent(this@MultipleChoiceDetailActivity, QuizResultActivity::class.java)
                 intent.putExtra("score", score)
                 intent.putExtra("id", exerciseId)
+                intent.putExtra(QuizResultActivity.MULTIPLE_CHOICE, exerciseArrayList.size.toString())
                 startActivity(intent)
                 finish()
             }
@@ -201,5 +218,9 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
         onBackPressed()
 
         return super.onSupportNavigateUp()
+    }
+
+    companion object {
+        const val GET_ID = "get_id"
     }
 }

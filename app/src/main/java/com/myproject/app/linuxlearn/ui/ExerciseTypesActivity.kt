@@ -3,24 +3,18 @@ package com.myproject.app.linuxlearn.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.firebase.database.*
 import com.myproject.app.linuxlearn.R
-import com.myproject.app.linuxlearn.data.model.ExerciseModel
 import com.myproject.app.linuxlearn.databinding.ActivityExerciseTypesBinding
 
 class ExerciseTypesActivity : AppCompatActivity() {
     private var _binding: ActivityExerciseTypesBinding? = null
     private val binding get() = _binding
-    private lateinit var exerciseArrayList : ArrayList<ExerciseModel>
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityExerciseTypesBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-//        val exerciseIntent = intent
-//        id = exerciseIntent.getStringExtra("id")
-//        id = intent.extras?.getString("id")
+
         initAction()
         setToolbar(getString(R.string.type_question))
     }
@@ -37,49 +31,37 @@ class ExerciseTypesActivity : AppCompatActivity() {
     private fun initAction() {
         binding?.apply {
             cvMultipleChoice.setOnClickListener {
-//                val i = Intent(this@ExerciseTypesActivity, DetailExercisesActivity::class.java)
-////                val exerciseIntent = intent
-////                val id = exerciseIntent.getStringExtra("id")
-//                val exerciseModel = ExerciseModel()
-//                intent.putExtra("id", exerciseModel.id)
-//                startActivity(i)
                 toMultipleChoice()
             }
 
             cvMultiChoice.setOnClickListener {
                 toMultiChoice()
             }
+
+            cvDragDrop.setOnClickListener {
+                toDragAndDrop()
+            }
         }
     }
 
     private fun toMultipleChoice() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("exercises")
-
-        database.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                        for (exerciseSnapshot in snapshot.children) {
-                            val exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
-//                            exercise?.id = exerciseSnapshot.key.toString()
-                           // exercise?.id = intent.extras?.getString("id").toString()
-                            var id = intent.extras?.getString("id")
-                            val i = Intent(this@ExerciseTypesActivity, MultipleChoiceDetailActivity::class.java)
-                            intent.extras?.putString(id, exercise?.id)
-                            startActivity(i)
-                        }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        val getType = intent.getStringExtra(GET_ID)
+        val i = Intent(this@ExerciseTypesActivity, MultipleChoiceDetailActivity::class.java)
+        i.putExtra(MultipleChoiceDetailActivity.GET_ID, getType)
+        startActivity(i)
     }
 
     private fun toMultiChoice() {
+        val getType = intent.getStringExtra(GET_ID)
         val i = Intent(this@ExerciseTypesActivity, MultiChoiceDetailActivity::class.java)
+        i.putExtra(MultiChoiceDetailActivity.GET_ID, getType)
+        startActivity(i)
+    }
+
+    private fun toDragAndDrop() {
+        val getType = intent.getStringExtra(GET_ID)
+        val i = Intent(this@ExerciseTypesActivity, DragAndDropDetailActivity::class.java)
+        i.putExtra(DragAndDropDetailActivity.GET_ID, getType)
         startActivity(i)
     }
 
@@ -93,5 +75,9 @@ class ExerciseTypesActivity : AppCompatActivity() {
         onBackPressed()
 
         return super.onSupportNavigateUp()
+    }
+
+    companion object {
+        const val GET_ID = "get_id"
     }
 }

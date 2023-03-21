@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import androidx.core.os.HandlerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.adapter.SubjectMatterAdapter
 import com.myproject.app.linuxlearn.data.model.ContentModel
@@ -37,13 +39,14 @@ class SeeAllSubjectMatterActivity : AppCompatActivity() {
     }
 
     private fun getSubjectMatter() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("subjectmatter")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.subjectMatterEndpoint)
         subjectMatterArrayList = arrayListOf()
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(mainLooper)
+                    handler.postDelayed({
                         for (subjectMatterSnapshot in snapshot.children) {
                             val subjectMatter =
                                 subjectMatterSnapshot.getValue(SubjectMatterModel::class.java)

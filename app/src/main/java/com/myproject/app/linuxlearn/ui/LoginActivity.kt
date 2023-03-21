@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
     private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding
     private lateinit var auth: FirebaseAuth
-    private var mGoogleSignInClient: GoogleSignInClient? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         auth = Firebase.auth
-        createRequest()
 
         initAction()
     }
@@ -48,9 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 loginUser()
             }
 
-            btnGoogle.setOnClickListener {
-                signInGoogle()
-            }
+
         }
     }
 
@@ -85,61 +81,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun createRequest() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("172969434719-bf99tdf62ggct6jtaev7q2r934n2i11m.apps.googleusercontent.com")
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-    }
-
-    private fun signInGoogle() {
-        val signInIntent = mGoogleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            if (task.isSuccessful) {
-                try {
-                    val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
-                    firebaseAuthWithGoogle(account)
-                } catch (e: ApiException) {
-                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    auth.currentUser!!
-                    val intent = Intent(applicationContext, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this@LoginActivity, "Sorry auth failed.", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
         _binding = null
-    }
-
-    companion object {
-        private const val RC_SIGN_IN = 123
     }
 }

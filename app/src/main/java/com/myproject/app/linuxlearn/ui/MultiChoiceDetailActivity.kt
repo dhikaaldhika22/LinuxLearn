@@ -8,6 +8,7 @@ import android.util.SparseBooleanArray
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.adapter.ExerciseAdapter
 import com.myproject.app.linuxlearn.data.model.ExerciseModel
@@ -57,15 +58,16 @@ class MultiChoiceDetailActivity : AppCompatActivity() {
     }
 
     private fun getDetailExercise() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("exercises")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.exerciseEndpoint)
         exerciseArrayList = arrayListOf()
 
         database.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    exerciseId = intent.getStringExtra("id")
-                    for (multiSnapshot in snapshot.child(exerciseId.toString()).child("questionMulti").children) {
+//                    exerciseId = intent.getStringExtra("id")
+                    exerciseId = intent.getStringExtra(GET_ID)
+                    for (multiSnapshot in snapshot.child(exerciseId.toString()).child(Constant.multiAnswerQuestionEndpoint).children) {
                         exercise = multiSnapshot.getValue(ExerciseModel::class.java)
                         exercise?.id = multiSnapshot.key.toString()
 
@@ -115,7 +117,21 @@ class MultiChoiceDetailActivity : AppCompatActivity() {
                                     tvCurrentQuestion.text = "Pertanyaan ${currentQuestionPosition + 1}"
                                     if (currentQuestionPosition == size-1) {
                                         setIndicator()
-                                        finishQuiz()
+//                                        finishQuiz()
+                                        btnSubmit.setOnClickListener {
+                                            for (answer in correctAnswerList) {
+                                                if (sortedAnswer.contains(answer)) {
+                                                    score++
+                                                }
+                                            }
+                                            val intent = Intent(this@MultiChoiceDetailActivity, QuizResultActivity::class.java)
+                                            intent.putExtra("score", score)
+                                            intent.putExtra("id", exerciseId)
+                                            intent.putExtra(QuizResultActivity.MULTI_CHOICE, size.toString())
+                                            Log.d("Extra", "exerciseArrayList multisize: ${size}")
+                                            startActivity(intent)
+                                            finish()
+                                        }
                                     }
                                     Toast.makeText(this@MultiChoiceDetailActivity, "Skor anda : $score", Toast.LENGTH_SHORT).show()
                                 } else {
@@ -183,6 +199,7 @@ class MultiChoiceDetailActivity : AppCompatActivity() {
                 val intent = Intent(this@MultiChoiceDetailActivity, QuizResultActivity::class.java)
                 intent.putExtra("score", score)
                 intent.putExtra("id", exerciseId)
+                intent.putExtra(QuizResultActivity.MULTI_CHOICE, exerciseArrayList.size.toString())
                 startActivity(intent)
                 finish()
             }
@@ -211,5 +228,9 @@ class MultiChoiceDetailActivity : AppCompatActivity() {
         onBackPressed()
 
         return super.onSupportNavigateUp()
+    }
+
+    companion object {
+        const val GET_ID = "get_id"
     }
 }

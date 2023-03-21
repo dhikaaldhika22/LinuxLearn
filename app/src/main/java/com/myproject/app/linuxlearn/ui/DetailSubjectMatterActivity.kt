@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.myproject.app.linuxlearn.ui
 
 import android.content.Intent
@@ -8,7 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.HandlerCompat
 import com.google.firebase.database.*
+import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.data.model.ContentModel
 import com.myproject.app.linuxlearn.databinding.ActivityDetailSubjectMatterBinding
@@ -103,16 +103,17 @@ class DetailSubjectMatterActivity : AppCompatActivity() {
     }
 
     private fun getDetailSubjectMatter() {
-        database = FirebaseDatabase.getInstance("https://linux-learn-6bdc2-default-rtdb.asia-southeast1.firebasedatabase.app")
-            .getReference("subjectmatter")
+        database = FirebaseDatabase.getInstance(Constant.base_url)
+            .getReference(Constant.subjectMatterEndpoint)
         contentArrayList = arrayListOf()
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    Handler().postDelayed({
+                    val handler = HandlerCompat.createAsync(mainLooper)
+                    handler.postDelayed({
                         val subjectMatterId = intent.extras?.getString("id")
-                        for (contentSnapshot in snapshot.child(subjectMatterId.toString()).child("content").children) {
+                        for (contentSnapshot in snapshot.child(subjectMatterId.toString()).child(Constant.contentEndpoint).children) {
                             val content =
                                 contentSnapshot.getValue(ContentModel::class.java)
                             if (contentSnapshot.key == "1") {
