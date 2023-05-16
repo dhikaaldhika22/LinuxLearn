@@ -54,6 +54,17 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="?attr/colorOnPrimary" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_total_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="32dp"
+                android:layout_toEndOf="@id/tv_current_question">
+
+                <include layout="@layout/shimmer_total_question" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
@@ -76,6 +87,18 @@
             android:fontFamily="@font/poppins_semibold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_exercise_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="23dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl">
+
+            <include layout="@layout/shimmer_boxdisplay" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_question_box"
@@ -103,6 +126,25 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:textAlignment="center"
                 android:textColor="?attr/colorOnPrimary" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_display_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_boxdisplay" />
+                    <include layout="@layout/shimmer_display_box_long" />
+                    <include layout="@layout/shimmer_boxdisplay" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -120,6 +162,28 @@
             app:layout_constraintTop_toBottomOf="@id/cv_question_box"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_instruction">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_answer_box" />
+                <include layout="@layout/shimmer_answer_box" />
+                <include layout="@layout/shimmer_answer_box" />
+                <include layout="@layout/shimmer_answer_box" />
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <CheckBox
             android:id="@+id/cb_option1"
             android:layout_width="match_parent"
@@ -133,6 +197,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
             android:layoutDirection="rtl"
+            android:visibility="gone"
             android:background="@drawable/round_back_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_instruction"
@@ -151,6 +216,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
             android:layoutDirection="rtl"
+            android:visibility="gone"
             android:background="@drawable/round_back_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cb_option1"
@@ -169,6 +235,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
             android:layoutDirection="rtl"
+            android:visibility="gone"
             android:background="@drawable/round_back_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cb_option2"
@@ -187,6 +254,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
             android:layoutDirection="rtl"
+            android:visibility="gone"
             android:background="@drawable/round_back_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cb_option3"
@@ -204,6 +272,7 @@
             android:drawableEnd="@drawable/ic_baseline_arrow_forward"
             android:textColor="?attr/colorPrimaryVariant"
             android:fontFamily="@font/poppins_semibold"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cb_option4"
             app:layout_constraintBottom_toBottomOf="parent" />

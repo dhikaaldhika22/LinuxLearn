@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.HandlerCompat
 import com.google.firebase.database.*
 import com.myproject.app.linuxlearn.Constant
 import com.myproject.app.linuxlearn.R
@@ -65,81 +66,115 @@ class MultiChoiceDetailActivity : AppCompatActivity() {
         database.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-//                    exerciseId = intent.getStringExtra("id")
-                    exerciseId = intent.getStringExtra(GET_ID)
-                    for (multiSnapshot in snapshot.child(exerciseId.toString()).child(Constant.multiAnswerQuestionEndpoint).children) {
-                        exercise = multiSnapshot.getValue(ExerciseModel::class.java)
-                        exercise?.id = multiSnapshot.key.toString()
+                    val handler = HandlerCompat.createAsync(mainLooper)
+                    handler.postDelayed({
+                        exerciseId = intent.getStringExtra(GET_ID)
+                        for (multiSnapshot in snapshot.child(exerciseId.toString())
+                            .child(Constant.multiAnswerQuestionEndpoint).children) {
+                            exercise = multiSnapshot.getValue(ExerciseModel::class.java)
+                            exercise?.id = multiSnapshot.key.toString()
 
-                        if (multiSnapshot.key == "1") {
-                            binding?.apply {
-                                tvName.text = exercise?.name
-                                tvQuestion.text = exercise?.question
-                                cbOption1.text = exercise?.optionA
-                                cbOption2.text = exercise?.optionB
-                                cbOption3.text = exercise?.optionC
-                                cbOption4.text = exercise?.optionD
+                            if (multiSnapshot.key == "1") {
+                                binding?.apply {
+                                    tvName.text = exercise?.name
+                                    tvQuestion.text = exercise?.question
+                                    cbOption1.text = exercise?.optionA
+                                    cbOption2.text = exercise?.optionB
+                                    cbOption3.text = exercise?.optionC
+                                    cbOption4.text = exercise?.optionD
+
+                                    shimmerTotalQuestion.visibility = View.GONE
+                                    shimmerDisplayQuestion.visibility = View.GONE
+                                    shimmerExerciseName.visibility = View.GONE
+                                    shimmerBox.visibility = View.GONE
+
+                                    cbOption1.visibility = View.VISIBLE
+                                    cbOption2.visibility = View.VISIBLE
+                                    cbOption3.visibility = View.VISIBLE
+                                    cbOption4.visibility = View.VISIBLE
+
+                                    tvNext.visibility = View.VISIBLE
+                                }
                             }
-                        }
 
-                        exerciseArrayList.add(exercise!!)
-                        ExerciseAdapter(applicationContext, exerciseArrayList)
-                        binding?.tvTotalQuestion?.text = "/" + exerciseArrayList.size
-                        val size = exerciseArrayList.size
+                            exerciseArrayList.add(exercise!!)
+                            ExerciseAdapter(applicationContext, exerciseArrayList)
+                            binding?.tvTotalQuestion?.text = "/" + exerciseArrayList.size
+                            val size = exerciseArrayList.size
 
-                        binding?.apply {
-                            tvNext.setOnClickListener {
-                                resetOptions()
-                                if (answer != "") {
-                                    correctAnswers = exercise?.answerMulti ?: ""
-                                    val selectedAnswers = answer
-                                    val answerList = selectedAnswers.split(",").map { it.toInt() }
-                                    val sortedList = answerList.sorted()
-                                    val sortedAnswer = sortedList.joinToString(",")
-                                    val correctAnswerList = correctAnswers.split(", ")
-                                    for (answer in correctAnswerList) {
-                                        if (sortedAnswer.contains(answer)) {
-                                            score++
-                                        }
-                                    }
-                                    answer = ""
-                                    currentQuestionPosition++
-                                    exercise = exerciseArrayList[currentQuestionPosition]
-                                    binding?.apply {
-                                        tvName.text = exercise?.name
-                                        tvQuestion.text = exercise?.question
-                                        cbOption1.text = exercise?.optionA
-                                        cbOption2.text = exercise?.optionB
-                                        cbOption3.text = exercise?.optionC
-                                        cbOption4.text = exercise?.optionD
-                                    }
-
-                                    tvCurrentQuestion.text = "Pertanyaan ${currentQuestionPosition + 1}"
-                                    if (currentQuestionPosition == size-1) {
-                                        setIndicator()
-//                                        finishQuiz()
-                                        btnSubmit.setOnClickListener {
-                                            for (answer in correctAnswerList) {
-                                                if (sortedAnswer.contains(answer)) {
-                                                    score++
-                                                }
+                            binding?.apply {
+                                tvNext.setOnClickListener {
+                                    resetOptions()
+                                    if (answer != "") {
+                                        correctAnswers = exercise?.answerMulti ?: ""
+                                        val selectedAnswers = answer
+                                        val answerList =
+                                            selectedAnswers.split(",").map { it.toInt() }
+                                        val sortedList = answerList.sorted()
+                                        val sortedAnswer = sortedList.joinToString(",")
+                                        val correctAnswerList = correctAnswers.split(", ")
+                                        for (answer in correctAnswerList) {
+                                            if (sortedAnswer.contains(answer)) {
+                                                score++
                                             }
-                                            val intent = Intent(this@MultiChoiceDetailActivity, QuizResultActivity::class.java)
-                                            intent.putExtra("score", score)
-                                            intent.putExtra("id", exerciseId)
-                                            intent.putExtra(QuizResultActivity.MULTI_CHOICE, size.toString())
-                                            Log.d("Extra", "exerciseArrayList multisize: ${size}")
-                                            startActivity(intent)
-                                            finish()
                                         }
+                                        answer = ""
+                                        currentQuestionPosition++
+                                        exercise = exerciseArrayList[currentQuestionPosition]
+                                        binding?.apply {
+                                            tvName.text = exercise?.name
+                                            tvQuestion.text = exercise?.question
+                                            cbOption1.text = exercise?.optionA
+                                            cbOption2.text = exercise?.optionB
+                                            cbOption3.text = exercise?.optionC
+                                            cbOption4.text = exercise?.optionD
+                                        }
+
+                                        tvCurrentQuestion.text =
+                                            "Pertanyaan ${currentQuestionPosition + 1}"
+                                        if (currentQuestionPosition == size - 1) {
+                                            setIndicator()
+//                                        finishQuiz()
+                                            btnSubmit.setOnClickListener {
+                                                for (answer in correctAnswerList) {
+                                                    if (sortedAnswer.contains(answer)) {
+                                                        score++
+                                                    }
+                                                }
+                                                val intent = Intent(
+                                                    this@MultiChoiceDetailActivity,
+                                                    QuizResultActivity::class.java
+                                                )
+                                                intent.putExtra("score", score)
+                                                intent.putExtra("id", exerciseId)
+                                                intent.putExtra(
+                                                    QuizResultActivity.MULTI_CHOICE,
+                                                    size.toString()
+                                                )
+                                                Log.d(
+                                                    "Extra",
+                                                    "exerciseArrayList multisize: ${size}"
+                                                )
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                        }
+                                        Toast.makeText(
+                                            this@MultiChoiceDetailActivity,
+                                            "Skor anda : $score",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            this@MultiChoiceDetailActivity,
+                                            "Pilih jawaban terlebih dahulu!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
-                                    Toast.makeText(this@MultiChoiceDetailActivity, "Skor anda : $score", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    Toast.makeText(this@MultiChoiceDetailActivity, "Pilih jawaban terlebih dahulu!", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
-                    }
+                    }, 2000)
                 }
             }
 

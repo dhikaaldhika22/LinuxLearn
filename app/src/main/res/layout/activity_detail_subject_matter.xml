@@ -28,7 +28,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginTop="20dp"
-            tools:text="Pengenalan Dasar Sistem Operasi"
+            tools:text="Pengenalan Dasar Sistem Operasi Linux"
             android:textSize="24sp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="?attr/colorPrimaryVariant"
@@ -36,6 +36,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <include layout="@layout/shimmer_subject_name" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <TextView
             android:id="@+id/tv_label1"
@@ -139,6 +153,74 @@ dengan platform sistem operasi yang berbeda karena sifatnya yang umum dan non-sp
             app:layout_constraintTop_toBottomOf="@id/nav_2"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <FrameLayout
+            android:id="@+id/fl_video"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="32dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_content"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/full_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lihat Layar Penuh"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fl_video" />
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nav_1"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+                <include layout="@layout/shimmer_box" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
@@ -183,6 +265,7 @@ dengan platform sistem operasi yang berbeda karena sifatnya yang umum dan non-sp
             android:drawableEnd="@drawable/ic_baseline_arrow_forward"
             android:textColor="?attr/colorPrimaryVariant"
             android:fontFamily="@font/poppins_semibold"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_content"
             app:layout_constraintBottom_toBottomOf="parent" />

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/white"
+    android:shadowRadius="50"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#7F000000"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:maxLines="2"
+            android:textColor="#DDDDDD"
+            android:background="#DDDDDD"
+            android:textSize="18sp"
+            android:transitionName="title"
+            android:text="Dasar Sistem Operasi" />
+
+        <ImageView
+            android:id="@+id/iv_select1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            app:tint="#DDDDDD"
+            android:src="@drawable/round_back_white" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

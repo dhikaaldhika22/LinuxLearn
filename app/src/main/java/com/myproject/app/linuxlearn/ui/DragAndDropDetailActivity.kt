@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.os.HandlerCompat
 import androidx.core.view.children
 import com.google.firebase.database.*
 import com.myproject.app.linuxlearn.Constant
@@ -70,106 +71,131 @@ class DragAndDropDetailActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
 //                    exerciseId = intent.getStringExtra("id")
-                    exerciseId = intent.getStringExtra(GET_ID)
-                    for (dragExerciseSnapshot in snapshot.child(exerciseId.toString())
-                        .child(Constant.dragAndDropQuestionEndpoint).children) {
-                        exercise = dragExerciseSnapshot.getValue(ExerciseModel::class.java)
-                        exercise?.id = dragExerciseSnapshot.key.toString()
+                    val handler = HandlerCompat.createAsync(mainLooper)
+                    handler.postDelayed({
+                        exerciseId = intent.getStringExtra(GET_ID)
+                        for (dragExerciseSnapshot in snapshot.child(exerciseId.toString())
+                            .child(Constant.dragAndDropQuestionEndpoint).children) {
+                            exercise = dragExerciseSnapshot.getValue(ExerciseModel::class.java)
+                            exercise?.id = dragExerciseSnapshot.key.toString()
 
-                        if (dragExerciseSnapshot.key == "1") {
-                            binding?.apply {
-                                tvName.text = exercise?.name
-                                tvQuestion.text = exercise?.question
-                                tvOption1.text = exercise?.optionA
-                                tvOption2.text = exercise?.optionB
-                                tvOption3.text = exercise?.optionC
-                                tvOption4.text = exercise?.optionD
+                            if (dragExerciseSnapshot.key == "1") {
+                                binding?.apply {
+                                    tvName.text = exercise?.name
+                                    tvQuestion.text = exercise?.question
+                                    tvOption1.text = exercise?.optionA
+                                    tvOption2.text = exercise?.optionB
+                                    tvOption3.text = exercise?.optionC
+                                    tvOption4.text = exercise?.optionD
+
+                                    shimmerTotalQuestion.visibility = View.GONE
+                                    shimmerDisplayQuestion.visibility = View.GONE
+                                    shimmerExerciseName.visibility = View.GONE
+                                    shimmerBox.visibility = View.GONE
+
+                                    tvOption1.visibility = View.VISIBLE
+                                    tvOption2.visibility = View.VISIBLE
+                                    tvOption3.visibility = View.VISIBLE
+                                    tvOption4.visibility = View.VISIBLE
+
+                                    tvNext.visibility = View.VISIBLE
+                                }
                             }
-                        }
-                        exerciseArrayList.add(exercise!!)
-                        ExerciseAdapter(applicationContext, exerciseArrayList)
-                        binding?.tvTotalQuestion?.text = "/" + exerciseArrayList.size.toString()
-                        val size = exerciseArrayList.size
+                            exerciseArrayList.add(exercise!!)
+                            ExerciseAdapter(applicationContext, exerciseArrayList)
+                            binding?.tvTotalQuestion?.text = "/" + exerciseArrayList.size.toString()
+                            val size = exerciseArrayList.size
 
-                        binding?.apply {
-                            resetOptions()
-                            buttonAction()
-                            tvNext.setOnClickListener {
-                                if (selectedOption != 0) {
-                                    correctAnswerId = exercise?.answer ?: 0
-                                    if (selectedOption == correctAnswerId) {
-                                        score++
-                                    }
-                                    selectedOption = 0
-                                    currentQuestionPosition++
-                                    exercise = exerciseArrayList[currentQuestionPosition]
-                                    binding?.apply {
-                                        tvName.text = exercise?.name
-                                        tvQuestion.text = exercise?.question
-                                        tvOption1.text = exercise?.optionA
-                                        tvOption2.text = exercise?.optionB
-                                        tvOption3.text = exercise?.optionC
-                                        tvOption4.text = exercise?.optionD
-                                    }
-                                    correctAnswerId = exercise?.answer ?: 0
-                                    if (selectedOption == correctAnswerId) {
-                                        score++
-                                    }
-                                    tvCurrentQuestion.text =
-                                        "Pertanyaan ${currentQuestionPosition + 1}"
-                                    if (currentQuestionPosition == size - 1) {
-                                        setIndicator()
-                                     //   finishQuiz()
-                                        btnSubmit.setOnClickListener {
-                                            if (selectedOption == correctAnswerId) {
-                                                score++
-                                            }
-
-                                            val intent = Intent(this@DragAndDropDetailActivity, QuizResultActivity::class.java)
-                                            intent.putExtra("score", score)
-                                            intent.putExtra("id", exerciseId)
-                                            intent.putExtra(QuizResultActivity.DRAG_DROP, size.toString())
-                                            Log.d("Extra", "exerciseArrayList size: ${exerciseArrayList?.size}")
-                                            startActivity(intent)
-                                            finish()
-
+                            binding?.apply {
+                                resetOptions()
+                                buttonAction()
+                                tvNext.setOnClickListener {
+                                    if (selectedOption != 0) {
+                                        correctAnswerId = exercise?.answer ?: 0
+                                        if (selectedOption == correctAnswerId) {
+                                            score++
                                         }
-                                    }
+                                        selectedOption = 0
+                                        currentQuestionPosition++
+                                        exercise = exerciseArrayList[currentQuestionPosition]
+                                        binding?.apply {
+                                            tvName.text = exercise?.name
+                                            tvQuestion.text = exercise?.question
+                                            tvOption1.text = exercise?.optionA
+                                            tvOption2.text = exercise?.optionB
+                                            tvOption3.text = exercise?.optionC
+                                            tvOption4.text = exercise?.optionD
+                                        }
+                                        correctAnswerId = exercise?.answer ?: 0
+                                        if (selectedOption == correctAnswerId) {
+                                            score++
+                                        }
+                                        tvCurrentQuestion.text =
+                                            "Pertanyaan ${currentQuestionPosition + 1}"
+                                        if (currentQuestionPosition == size - 1) {
+                                            setIndicator()
+                                            //   finishQuiz()
+                                            btnSubmit.setOnClickListener {
+                                                if (selectedOption == correctAnswerId) {
+                                                    score++
+                                                }
 
-                                    for (child in blankBox.children) {
-                                        blankBox.removeView(child)
-                                        resetOptions()
-                                        when (child.id) {
-                                            tvOption1.id -> {
-                                                ll.addView(child, 0)
-                                            }
-                                            tvOption2.id -> {
-                                                ll.addView(child, 1)
-                                            }
-                                            tvOption3.id -> {
-                                                ll.addView(child, 2)
-                                            }
-                                            else -> {
-                                                ll.addView(child, 3)
+                                                val intent = Intent(
+                                                    this@DragAndDropDetailActivity,
+                                                    QuizResultActivity::class.java
+                                                )
+                                                intent.putExtra("score", score)
+                                                intent.putExtra("id", exerciseId)
+                                                intent.putExtra(
+                                                    QuizResultActivity.DRAG_DROP,
+                                                    size.toString()
+                                                )
+                                                Log.d(
+                                                    "Extra",
+                                                    "exerciseArrayList size: ${exerciseArrayList?.size}"
+                                                )
+                                                startActivity(intent)
+                                                finish()
+
                                             }
                                         }
-                                    }
 
-                                    Toast.makeText(
-                                        this@DragAndDropDetailActivity,
-                                        "Skor anda : $score",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        this@DragAndDropDetailActivity,
-                                        "Pilih jawaban terlebih dahulu!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                        for (child in blankBox.children) {
+                                            blankBox.removeView(child)
+                                            resetOptions()
+                                            when (child.id) {
+                                                tvOption1.id -> {
+                                                    ll.addView(child, 0)
+                                                }
+                                                tvOption2.id -> {
+                                                    ll.addView(child, 1)
+                                                }
+                                                tvOption3.id -> {
+                                                    ll.addView(child, 2)
+                                                }
+                                                else -> {
+                                                    ll.addView(child, 3)
+                                                }
+                                            }
+                                        }
+
+                                        Toast.makeText(
+                                            this@DragAndDropDetailActivity,
+                                            "Skor anda : $score",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            this@DragAndDropDetailActivity,
+                                            "Pilih jawaban terlebih dahulu!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
                         }
-                    }
+                    }, 2000)
+
                 }
             }
 

@@ -36,8 +36,8 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         setToolbar(getString(R.string.exercise))
-        getDetailExercise()
         multipleButtonAction()
+        getDetailExercise()
     }
 
     private fun setToolbar(title: String) {
@@ -69,7 +69,6 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
 //                        exerciseId = intent.getStringExtra("id")
                         exerciseId = intent.getStringExtra(GET_ID)
                         Log.d("asu get", "onData: $exerciseId")
-//                        exercise?.id = intent.getStringExtra(GET_ID).toString()
                         for (exerciseSnapshot in snapshot.child(exerciseId.toString()).child(Constant.multipleChoiceQuestionEndpoint).children) {
                             exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
                             exercise?.id = exerciseSnapshot.key.toString()
@@ -85,6 +84,21 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
                                 }
                             }
                             exerciseArrayList.add(exercise!!)
+
+                            binding?.apply {
+                                shimmerTotalQuestion.visibility = View.GONE
+                                shimmerDisplayQuestion.visibility = View.GONE
+                                shimmerExerciseName.visibility = View.GONE
+                                shimmerQuestionBox.visibility = View.GONE
+
+                                rlOption1.visibility = View.VISIBLE
+                                rlOption2.visibility = View.VISIBLE
+                                rlOption3.visibility = View.VISIBLE
+                                rlOption4.visibility = View.VISIBLE
+
+                                tvNext.visibility = View.VISIBLE
+                            }
+
                             ExerciseAdapter(applicationContext, exerciseArrayList)
                             binding?.tvTotalQuestion?.text = "/" + exerciseArrayList.size.toString()
                             val size = exerciseArrayList.size
