@@ -100,38 +100,40 @@ class DetailSubjectMatterActivity : AppCompatActivity() {
         val subjectMatterIntent = intent
         val subjectMatterName = subjectMatterIntent.getStringExtra("name")
         val subjectMatterLabel = subjectMatterIntent.getStringExtra("label")
+        val subjectMatterLabel2 = subjectMatterIntent.getStringExtra("label2")
 
         binding?.apply {
             tvName.text = subjectMatterName
             tvLabel1.text = subjectMatterLabel
+            tvLabel2.text = subjectMatterLabel2
         }
     }
 
-    private fun videoPlayer() {
-        binding?.flVideo?.visibility = View.VISIBLE
-        binding?.videoView?.visibility = View.VISIBLE
-        val videoView = findViewById<VideoView>(R.id.videoView)
-        val mediaController = MediaController(this@DetailSubjectMatterActivity)
-        mediaController.setAnchorView(videoView)
-        videoView?.setMediaController(mediaController)
-
-        val videoUri = when (subjectMatterId) {
-            "1" -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.dummy)
-            }
-            "2" -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.tes)
-            }
-            "3" -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.dummy)
-            }
-            else -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.tes)
-            }
-        }
-        videoView?.setVideoURI(videoUri)
-        videoView?.start()
-    }
+//    private fun videoPlayer() {
+//        binding?.flVideo?.visibility = View.VISIBLE
+//        binding?.videoView?.visibility = View.VISIBLE
+//        val videoView = findViewById<VideoView>(R.id.videoView)
+//        val mediaController = MediaController(this@DetailSubjectMatterActivity)
+//        mediaController.setAnchorView(videoView)
+//        videoView?.setMediaController(mediaController)
+//
+//        val videoUri = when (subjectMatterId) {
+//            "1" -> {
+//                Uri.parse("android.resource://" + packageName + "/" + R.raw.dummy)
+//            }
+//            "2" -> {
+//                Uri.parse("android.resource://" + packageName + "/" + R.raw.tes)
+//            }
+//            "3" -> {
+//                Uri.parse("android.resource://" + packageName + "/" + R.raw.dummy)
+//            }
+//            else -> {
+//                Uri.parse("android.resource://" + packageName + "/" + R.raw.tes)
+//            }
+//        }
+//        videoView?.setVideoURI(videoUri)
+//        videoView?.start()
+//    }
 
     private fun getDetailSubjectMatter() {
         database = FirebaseDatabase.getInstance(Constant.base_url)
@@ -190,16 +192,16 @@ class DetailSubjectMatterActivity : AppCompatActivity() {
 
         val videoUri = when (subjectMatterId) {
             "1" -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.dummy)
+                Uri.parse("android.resource://" + packageName + "/" + R.raw.dasarlinux)
             }
             "2" -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.nartoh9)
+                Uri.parse("android.resource://" + packageName + "/" + R.raw.operasifile)
             }
             "3" -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.only)
+                Uri.parse("android.resource://" + packageName + "/" + R.raw.manajemenproses)
             }
             else -> {
-                Uri.parse("android.resource://" + packageName + "/" + R.raw.perhapslove)
+                Uri.parse("android.resource://" + packageName + "/" + R.raw.manajemenaplikasi)
             }
         }
 

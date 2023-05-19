@@ -29,16 +29,20 @@ class SubjectMatterAdapter(var c: Context, private val listSubject: List<Subject
                 .centerCrop()
                 .into(ivThumbnail)
         tvTitle.text = subjectMatter.name
-        tvLabel.text = subjectMatter.label
+        tvLabel.text = subjectMatter.subheading
         tvDescription.text = subjectMatter.description
 
         holder.itemView.setOnClickListener {
             val intent = Intent(c, DetailSubjectMatterActivity::class.java)
             val name = detailSubjectMatter.name
+            val subheading = detailSubjectMatter.subheading
             val label = detailSubjectMatter.label
+            val label2 = detailSubjectMatter.label2
             intent.putExtra("id", subjectMatter.id)
             intent.putExtra("name", name)
+            intent.putExtra("subheading", subheading)
             intent.putExtra("label", label)
+            intent.putExtra("label2", label2)
             c.startActivity(intent)
         }
         }

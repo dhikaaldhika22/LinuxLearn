@@ -42,16 +42,16 @@ class FullScreenVideoActivity : AppCompatActivity() {
 
             val videoUri = when (subjectMatterId) {
                 "1" -> {
-                    Uri.parse("android.resource://" + packageName + "/" + R.raw.dummy)
+                    Uri.parse("android.resource://" + packageName + "/" + R.raw.dasarlinux)
                 }
                 "2" -> {
-                    Uri.parse("android.resource://" + packageName + "/" + R.raw.nartoh9)
+                    Uri.parse("android.resource://" + packageName + "/" + R.raw.operasifile)
                 }
                 "3" -> {
-                    Uri.parse("android.resource://" + packageName + "/" + R.raw.only)
+                    Uri.parse("android.resource://" + packageName + "/" + R.raw.manajemenproses)
                 }
                 else -> {
-                    Uri.parse("android.resource://" + packageName + "/" + R.raw.perhapslove)
+                    Uri.parse("android.resource://" + packageName + "/" + R.raw.manajemenaplikasi)
                 }
             }
             videoView.setVideoURI(videoUri)

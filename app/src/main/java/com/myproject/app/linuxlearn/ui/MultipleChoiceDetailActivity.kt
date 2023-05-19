@@ -73,7 +73,7 @@ class MultipleChoiceDetailActivity : AppCompatActivity() {
                             exercise = exerciseSnapshot.getValue(ExerciseModel::class.java)
                             exercise?.id = exerciseSnapshot.key.toString()
 
-                            if (exerciseSnapshot.key == exerciseId.toString()) {
+                            if (exerciseSnapshot.key == "1") {
                                 binding?.apply {
                                     tvName.text = exercise?.name
                                     tvQuestion.text = exercise?.question

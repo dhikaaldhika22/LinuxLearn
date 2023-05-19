@@ -7,7 +7,9 @@ data class SubjectMatterModel(
     var id: String = "",
     val imageUrl: String = "",
     val name: String = "",
+    val subheading: String = "",
     val label: String = "",
+    val label2: String = "",
     val description: String = "",
     val content: List<ContentModel> = listOf()
 )

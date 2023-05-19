@@ -1,8 +1,10 @@
 package com.myproject.app.linuxlearn.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.myproject.app.linuxlearn.R
 import com.myproject.app.linuxlearn.databinding.ActivityStartedScreenBinding
 
 class StartedScreenActivity : AppCompatActivity() {
@@ -19,6 +21,14 @@ class StartedScreenActivity : AppCompatActivity() {
 
     private fun initAction() {
         binding?.apply {
+            val currentTheme = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+            if (currentTheme == Configuration.UI_MODE_NIGHT_YES) {
+                layout.setBackgroundResource(R.drawable.startedbackground_night)
+            } else {
+                layout.setBackgroundResource(R.drawable.started_background)
+            }
+
             btnLogin.setOnClickListener {
                 val intent = Intent(this@StartedScreenActivity, LoginActivity::class.java)
                 startActivity(intent)
